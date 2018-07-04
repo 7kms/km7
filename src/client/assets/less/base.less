@@ -1,0 +1,49 @@
+@import "./const.less";
+html{
+    height: 100%;
+    font-size: @base-size;
+}
+html,body,div,h1,h2,h3,h4,h5,h6,header,article,nav,ul,li,table,tr,td,th,tbody,span,p,a,b,strong,input,textarea,form,input{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+p, article, article table, h1, h2, h3, h4, h5, h6 {
+    color: #464646;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1em;
+    font-weight: 600;
+    color: #4e4e4e;
+    word-wrap: break-word;
+    margin: 10px 0
+}
+body{
+    overflow: auto;
+    min-width: 320*@px;
+    font-family: -apple-system,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+input,textarea{
+    outline: none;
+    border: none;
+}
+:global{
+    .fl{
+        float: left;
+    }
+    .fr{
+        float: right;
+    }
+    .app-root{
+        padding-top: @navH;
+    }
+}

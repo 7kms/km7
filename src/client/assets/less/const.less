@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+
+@threshold: 699px;
+@theme-color: #e60033;
+@line-color: #d8d8d8;
+@px: 1/20rem;
+@px2rem: @px;
+@base-size: 20px;
+@content-width: 996 *@px;
+@navH: 46*@px;
+
+@text-color-black: #333;
+@text-color-gray: #999;
+
+
+
+.imgset(@src, @ext:png){
+    background-image: url(~"@{src}@1x.@{ext}");
+    background-image: image-set(url(~"@{src}@1x.@{ext}") 1x, url(~"@{src}@2x.@{ext}") 2x);
+}

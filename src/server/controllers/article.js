@@ -1,6 +1,5 @@
 import {responseData} from '../utils'
 
-
 const generateList = (category)=>{
     const list = [
         {

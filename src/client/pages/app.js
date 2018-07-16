@@ -10,7 +10,7 @@ import styles from '~less/app.less'
 let cx = classNames.bind(styles)
 
 const nav2 = [
-    {name:'关于',url:'/about',key:'about'}
+    {name:'About',url:'/about',key:'about'}
 ]
 
 const mapStateToProps = ({navInfo:{list}})=>{

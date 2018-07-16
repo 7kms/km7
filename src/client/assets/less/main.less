@@ -1,0 +1,19 @@
+@import "./const.less";
+
+
+.list-item{
+    display: flex;
+    padding: 15*@px 20*@px;
+    background-color: #fff;
+    .left{
+        flex: 1;
+    }
+    .right{
+        width: 60*@px;
+        height: 60*@px;
+        margin-left: 20*@px;
+    }
+    &:hover{
+        background-color: rgba(0,0,0,.01)
+    }
+}

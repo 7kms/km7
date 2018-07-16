@@ -7,9 +7,9 @@ program.option('-p, --port <n>')
        .option('--api')
        .parse(process.argv)
 
-console.log('program.port %j',program.port)
-console.log('program.client',program.client)
-console.log('program.api',program.api)
+// console.log('program.port %j',program.port)
+// console.log('program.client',program.client)
+// console.log('program.api',program.api)
 if(program.client){
     KM7App({isDev}).start(program.port)
 }else{

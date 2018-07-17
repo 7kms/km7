@@ -35,7 +35,11 @@ class Category {
             await Model.destroy({where:{id}})
             res.json(responseData(200))
         }catch(e){
-            res.json(responseData(500,e))
+            if(e.name == 'SequelizeForeignKeyConstraintError'){
+                res.json(responseData(407,{msg: 'still has tags belong to this category'}))
+            }else{
+                res.json(responseData(500,e))
+            }
         }
     }
 }

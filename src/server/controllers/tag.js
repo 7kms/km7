@@ -1,25 +1,32 @@
 import {responseData} from '../utils'
 import Model from '../model/tag';
+import DAO from '../dao'
 
 
 class Tag {
     list = async (req,res)=>{
-       try{
-            let list = await Model.findAll({raw: true}); 
-            res.json(responseData(200,{list}))
-        }catch(e){
-            res.json(responseData(500,e))
-       }
+        let list = await DAO.execute('select t.id, t.name ,t.categoryId,c.name category from tags t,categories c where t.categoryId=c.id order by t.categoryId');
+        const obj = {};
+        list.forEach(tag=>{
+            if(!obj[tag.category]){
+                obj[tag.category] = {
+                    count: 0,
+                    tags: [],
+                    categoryId: tag.categoryId,
+                    categoryName: tag.category
+                };
+            }
+            obj[tag.category].tags.push({id: tag.id,name: tag.name});
+            obj[tag.category].count++
+        })
+        // let list = await Model.findAll({raw: true}); 
+        res.json(responseData(200,obj))
     }
     update = async (req,res)=>{
         const {id} = req.params;
         const obj = req.body;
-        try{
-            await Model.update(obj,{where:{id}})
-            res.json(responseData(200,{msg: 'success'}))
-        }catch(e){
-            res.json(responseData(500,e))
-        }
+        await Model.update(obj,{where:{id}})
+        res.json(responseData(200,{msg: 'success'}))
     }
     insert = async (req,res)=>{
         let {name,categoryId} = req.body;
@@ -33,7 +40,7 @@ class Tag {
     remove = async (req,res)=>{
         const {id} = req.params;
         try{
-            await Model.delete({where:{id}})
+            await Model.destroy({where:{id}})
             res.json(responseData(200))
         }catch(e){
             res.json(responseData(500,e))

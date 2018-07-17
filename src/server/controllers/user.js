@@ -22,7 +22,7 @@ class User {
                   return;
                 }
             }else{
-                let result = await Model.findAll({attributes:[[DAO.sequelize.fn('count'),'count']]})
+                let result =  await DAO.execute('select count(*) as count from users');
                 if(result[0].count === 0){
                     await this.register(obj);
                     let result = await Model.findAll({account: obj.account});
@@ -41,7 +41,7 @@ class User {
     register = async(obj)=>{
       let salt = Math.random().toString(16);
       let password = this.getHashPassword(obj.password,salt);
-      return await Model.create({name: 'km7',salt,password})
+      return await Model.create({name: 'km7',salt,password,account: obj.account})
     }
     profile = async(req,res)=>{
         let user = req.session.user;

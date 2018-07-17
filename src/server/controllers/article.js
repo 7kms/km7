@@ -1,34 +1,55 @@
 import {responseData} from '../utils'
-import Model from '../model/article';
-const generateList = (category)=>{
-    const list = [
-        {
-            title: 'tes1',
-            createTime: '2018-06-01 08:00:32'
-        },
-        {
-            title: 'tes1',
-            createTime: '2018-06-01 08:00:32'
-        },
-        {
-            title: 'tes2',
-            createTime: '2018-06-01 08:00:32'
+import Model from '../model/article'
+
+class Article {
+
+    list = async (req,res)=>{
+        const {categoryId} = req.params;
+        let list = await Model.findAll({where:{categoryId},raw: true})
+        res.json(responseData(200,{list}))
+    }
+
+    detail = async (req,res)=>{
+        let {id} = req.params;
+        let article = await Model.findOne({where:{id}})
+        res.send(responseData(200,{article}))
+    }
+
+    update = async (req,res)=>{
+        const {id} = req.params;
+        const obj = req.body;
+        try{
+            await Model.update(obj,{where:{id}})
+            res.json(responseData(200,{msg: 'success'}))
+        }catch(e){
+            res.json(responseData(500,e))
         }
-    ]
-    list.forEach(item=>{
-        item.title = `${category} - ${item.title}`
-    })
-    return list
+    }
+
+    insert = async (req,res)=>{
+        let obj = req.body;
+        obj.userId = req.session.user.id;
+        try{
+            let result = await Model.create(obj)
+            res.json(responseData(200,{result}))
+        }catch(e){
+            res.json(responseData(500,{msg: e.sqlMessage}))
+        }
+    }
+
+    remove = async (req,res)=>{
+        const {id} = req.params;
+        try{
+            await Model.destroy({where:{id}})
+            res.json(responseData(200))
+        }catch(e){
+            if(e.name == 'SequelizeForeignKeyConstraintError'){
+                res.json(responseData(407,{msg: 'still has tags belong to this category'}))
+            }else{
+                res.json(responseData(500,e))
+            }
+        }
+    }
 }
 
-export const articleList = (req,res)=>{
-    const list = generateList(req.params.category)
-    res.json(responseData(200,list))
-}
-
-
-export const articleDetail = (req,res)=>{
-   let {id} = req.params;
-
-   res.send(responseData(200,{id}))
-}
+export default new Article()

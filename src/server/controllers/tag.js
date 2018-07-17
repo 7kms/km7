@@ -1,36 +1,40 @@
 import {responseData} from '../utils'
-import DAO from '../dao'
+import Model from '../model/tag';
 
 
 class Tag {
     list = async (req,res)=>{
        try{
-            let list =  await DAO.execute(`select * from tag`)
+            let list = await Model.findAll({raw: true}); 
             res.json(responseData(200,{list}))
         }catch(e){
             res.json(responseData(500,e))
        }
     }
     update = async (req,res)=>{
+        const {id} = req.params;
+        const obj = req.body;
         try{
-            let list =  await DAO.execute(`select * from tags`)
-            res.json(responseData(200,{list}))
+            await Model.update(obj,{where:{id}})
+            res.json(responseData(200,{msg: 'success'}))
         }catch(e){
             res.json(responseData(500,e))
         }
     }
     insert = async (req,res)=>{
+        let {name,categoryId} = req.body;
         try{
-            let list =  await DAO.execute(`select * from tags`)
-            res.json(responseData(200,{list}))
+            let result = await Model.create({name,categoryId})
+            res.json(responseData(200,{result}))
         }catch(e){
-            res.json(responseData(500,e))
+            res.json(responseData(500,{msg: e.sqlMessage}))
         }
     }
-    delete = async (req,res)=>{
+    remove = async (req,res)=>{
+        const {id} = req.params;
         try{
-            let list =  await DAO.execute(`select * from tags`)
-            res.json(responseData(200,{list}))
+            await Model.delete({where:{id}})
+            res.json(responseData(200))
         }catch(e){
             res.json(responseData(500,e))
         }

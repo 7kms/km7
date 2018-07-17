@@ -3,6 +3,7 @@ import aritcleRouter from './article'
 import navRouter from './nav'
 import userRouter from './user'
 import catetoryRouter from './category'
+import tagRouter from './tag'
 import Permission from '../controllers/permission'
 const router = express.Router()
 
@@ -19,10 +20,12 @@ router.use('*', (req,res,next)=>{
 })
 router.use('/user', userRouter)
 router.use('/nav', navRouter)
-router.use('/article', aritcleRouter)
+router.get('/article', aritcleRouter)
 
 //article manage at background
 router.use(Permission.needLogin)
 router.use('/category', catetoryRouter)
+router.use('/tag', tagRouter)
+router.use('/article', aritcleRouter)
 
 export default router

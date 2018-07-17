@@ -73,7 +73,8 @@ export const dateFormat = (date, mask) => {
     });
 };
 
-export const UTCTimestamp = ()=>{
-    let date = new Date();
+
+export const UTCTimestamp = (date)=>{
+    date = date || new Date();
     return date.getTime() + date.getTimezoneOffset() * 60000;
 }

@@ -33,3 +33,10 @@ Then you need a third server to distribute the request.The config can be below.
 2. `npm run server` start a server on port `6802` to server all the requests to server include static files and all of the api.
 
 3. `sudo nginx` start the nginx to distribute the requests.So you can visit the webpage at `127.0.0.1:6800`.
+
+### database
+
+1. mysql
+> all the relation data
+2. redis
+> redis for user session persistence

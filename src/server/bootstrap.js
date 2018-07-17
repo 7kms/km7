@@ -1,18 +1,11 @@
-import mysql from 'mysql'
-import config from './config'
-
+import Dao from './dao'
+// export default async ()=>{
+//     await Dao.init();
+// }
 
 export default async ()=>{
-    return new Promise((resolve,reject)=>{
-        const connection = mysql.createConnection(config.db);
-        connection.connect(function(err) {
-            if (err) {
-              console.error('error connecting: ' + err.stack);
-              reject(err);
-            }
-            console.log('mysql connected as id ' + connection.threadId);
-            resolve(connection)
-        });
-    })
-    
+    await Dao.init();
+    const Server = require('./index');
+    return Server
 }
+

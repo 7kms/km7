@@ -1,5 +1,6 @@
-import {responseData,dateFormat} from '../utils';
+import {responseData} from '../utils';
 import DAO from '../dao'
+import Model from '../model/user';
 import crypto from 'crypto'
 
 class User {
@@ -12,7 +13,7 @@ class User {
     login = async(req,res)=>{
         const obj = req.body
         try{
-            let result =  await DAO.execute(`select * from user where account='${obj.account}'`);
+            let result =  await Model.findAll({account: obj.account});
             let user = result[0];
             if(user){
                 let hashpassword = this.getHashPassword(obj.password,user.salt)
@@ -21,18 +22,16 @@ class User {
                   return;
                 }
             }else{
-                let result = await DAO.execute(`select count(*) as count from user`)
+                let result = await Model.findAll({attributes:[[DAO.sequelize.fn('count'),'count']]})
                 if(result[0].count === 0){
                     await this.register(obj);
-                    let result = await DAO.execute(`select * from user where account='${obj.account}'`);
+                    let result = await Model.findAll({account: obj.account});
                     user = result[0];
                 }else{
                     res.json(responseData(401,{msg: 'account or password is not right'}))
                     return;
                 }
             }
-            delete user.password;
-            delete user.salt;
             req.session.user = user;
             res.json(responseData(200,{user}))
         }catch(e){
@@ -42,8 +41,7 @@ class User {
     register = async(obj)=>{
       let salt = Math.random().toString(16);
       let password = this.getHashPassword(obj.password,salt);
-      let currentTime = dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')
-      return await DAO.execute(`INSERT INTO user values(null, 'km7','${obj.account}','${salt}','${password}',null,'${currentTime}','${currentTime}');`)
+      return await Model.create({name: 'km7',salt,password})
     }
     profile = async(req,res)=>{
         let user = req.session.user;
@@ -52,8 +50,8 @@ class User {
     detail = async(req,res)=>{
         let {id} = req.params;
         try{
-            let list =  await DAO.execute(`select name,account,avatar from user where id=${id}`)
-            res.json(responseData(200,{user: list[0]}))
+            let list = await Model.findAll({attributes:['name','account'],where:{id}})
+            res.json(responseData(200,{user:list[0]}))
         }catch(e){
             res.json(responseData(500,e))
        }

@@ -1,10 +1,10 @@
 import express from 'express'
-import {articleList,articleDetail} from '../controllers/article'
+import controller from '../controllers/tag'
 const router = express.Router()
 
-router.get('/', articleList)
-router.post('/', articleList)
-router.put('/:id', articleDetail)
-router.delete('/:id', articleDetail)
+router.get('/', controller.list)
+router.post('/', controller.insert)
+router.put('/:id', controller.update)
+router.delete('/:id', controller.remove)
 
 export default router

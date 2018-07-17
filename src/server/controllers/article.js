@@ -1,5 +1,5 @@
 import {responseData} from '../utils'
-
+import Model from '../model/article';
 const generateList = (category)=>{
     const list = [
         {

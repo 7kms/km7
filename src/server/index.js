@@ -42,4 +42,5 @@ class Server {
     })
   }
 }
-export default Server;
+
+module.exports = new Server();

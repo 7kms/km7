@@ -1,7 +1,7 @@
 const isProduction = process.env.NODE_ENV === 'production'
 
 const base = {
-    db: {
+    mysql: {
         host     : 'localhost',
         user     : 'root',
         password : '111111',
@@ -15,7 +15,7 @@ const base = {
 
 const dev = {
     port: 6802,
-    db: {
+    mysql: {
         host     : 'localhost',
         user     : 'root',
         password : '111111',

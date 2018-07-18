@@ -12,6 +12,12 @@ CREATE TABLE `category`(
     UNIQUE INDEX(`name` DESC),
     PRIMARY KEY(`id`)
 );
+
+ALTER TABLE `categories` ADD COLUMN `key` VARCHAR(10) NOT NULL AFTER `name`;
+ALTER TABLE `categories` ADD UNIQUE (`key`);
+
+UPDATE `categories` c SET c.key= LOWER(c.name) LIMIT 10000;
+
  * 
  * 
  */
@@ -23,6 +29,10 @@ const Category = DAO.sequelize.define('category',{
         autoIncrement: true
     },
     name: {
+        type: Sequelize.STRING, 
+        allowNull: false
+    },
+    key: {
         type: Sequelize.STRING, 
         allowNull: false
     }

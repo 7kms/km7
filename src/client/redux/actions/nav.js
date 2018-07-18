@@ -3,11 +3,11 @@ import { $get } from '~utils/api'
 export const SET_NAV_LIST =  Symbol('SET_NAV_LIST')
 
 
-const setList = ({data})=>{
+const setList = (list)=>{
     return {
         type: SET_NAV_LIST,
         pyload: {
-            list:data
+            list
         }
     }
 }
@@ -15,8 +15,8 @@ const setList = ({data})=>{
 export const fetchNav = ()=>{
     return async (dispatch)=>{
         try{
-            const res = await $get('/nav')
-            dispatch(setList(res))
+            const {list} = await $get('/nav')
+            dispatch(setList(list))
         }catch(e){
             console.error(e)
         }

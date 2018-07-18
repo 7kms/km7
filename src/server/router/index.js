@@ -20,12 +20,12 @@ router.use('*', (req,res,next)=>{
 })
 router.use('/user', userRouter)
 router.use('/nav', navRouter)
-router.get('/article', aritcleRouter)
+router.use('/article', aritcleRouter)
 
 //article manage at background
 router.use(Permission.needLogin)
 router.use('/category', catetoryRouter)
 router.use('/tag', tagRouter)
-router.use('/article', aritcleRouter)
+
 
 export default router

@@ -20,6 +20,12 @@ import Category from './category'
         FOREIGN KEY(`category`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
         FOREIGN KEY(`userId`) REFERENCES `user` (`id`)
     );
+
+    ALTER TABLE `articles` ADD COLUMN `keywords` VARCHAR(255)  AFTER `title`;
+
+    ALTER TABLE `articles` MODIFY COLUMN `keywords` VARCHAR(255)  NOT NULL;
+    ALTER TABLE `articles` ADD COLUMN `description` VARCHAR(255) NOT NULL AFTER `keywords`;
+
  * 
  * 
  */
@@ -41,6 +47,12 @@ const Article = DAO.sequelize.define('article',{
     title: {
         type: Sequelize.STRING(500), 
         allowNull: false
+    },
+    keywords: {
+        type: Sequelize.STRING(255)
+    },
+    description: {
+        type: Sequelize.STRING(255)
     },
     content: {
         type: Sequelize.TEXT, 

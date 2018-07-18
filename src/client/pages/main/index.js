@@ -76,17 +76,14 @@ class Home extends Component{
     render(){
         const {list} = this.props;
         return (<KM7Page header={this.header}>
-            <div className={cx('list-item')}>
+            {list.map((item,index)=><div className={cx('list-item')} key={index}>
                 <div className={cx('left')}>
-                    <h3 className={cx('title')}>强大的 VS Code</h3>
-                    <div className={cx('brief')}></div>
+                    <h3 className={cx('title')}>{item.title}</h3>
+                    <div className={cx('desc')}>{item.description}</div>
                     <div className={cx('info')}></div>
                 </div>
                 <div className={cx('right')}></div>
-            </div>
-            {list.map((item,index)=>{
-                return <div key={index}>{item.title}</div>
-            })}
+            </div>)}
         </KM7Page>)
     }
 }

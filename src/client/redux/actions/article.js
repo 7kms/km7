@@ -4,11 +4,11 @@ export const SET_ARTICLE_LIST =  Symbol('SET_ARTICLE_LIST')
 export const EMPTY_ARTICLE_LIST =  Symbol('EMPTY_ARTICLE_LIST')
 
 
-const setArticleList = ({data})=>{
+const setArticleList = (list)=>{
     return {
         type: SET_ARTICLE_LIST,
         pyload: {
-            list:data
+            list
         }
     }
 }
@@ -23,8 +23,8 @@ export const emptyList = ()=>{
 export const fetchList = (category='frontend',params)=>{
     return async (dispatch)=>{
         try{
-            const res = await $get(`/article/${category}`,params)
-            dispatch(setArticleList(res))
+            const {list} = await $get(`/article/list/${category}`,params)
+            dispatch(setArticleList(list))
         }catch(e){
             console.error(e)
         }

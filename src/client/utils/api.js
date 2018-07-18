@@ -25,6 +25,9 @@ const errorProcess = (err)=>{
     // console.log(err);
     return Promise.reject(err)
 }
+const successProcess = (res)=>{
+    return Promise.resolve(res.data.result)
+}
 
 
 
@@ -49,24 +52,19 @@ const generateRequestObj = (method,url,paramsObj,cancelToken,noToken)=>{
 
 export const $get = (url, paramsObj={}, cancelToken)=>{
    let configObj = generateRequestObj('get',url,paramsObj,cancelToken);
-    return axios(configObj).then(res=>{
-        return Promise.resolve(res.data)
-    },errorProcess)
+//    console.log(configObj)
+    return axios(configObj).then(successProcess,errorProcess)
 }
 
 
 export const $post = (url, paramsObj={}, cancelToken)=>{
     let configObj = generateRequestObj('post',url,paramsObj,cancelToken);
-    return axios(configObj).then(res=>{
-         return Promise.resolve(res.data)
-     },errorProcess)
+    return axios(configObj).then(successProcess,errorProcess)
 }
 
 export const $postwithoutauthor = (url, paramsObj={}, cancelToken)=>{
     let configObj = generateRequestObj('post',url,paramsObj,cancelToken,true);
-    return axios(configObj).then(res=>{
-         return Promise.resolve(res.data)
-     },errorProcess)
+    return axios(configObj).then(successProcess,errorProcess)
 }
 
 export const $postwithformdata= (url, paramsObj={})=>{
@@ -82,14 +80,10 @@ export const $postwithformdata= (url, paramsObj={})=>{
         url: generateUrl(url),
         baseURL: SERVERURL,
         data: arr.join('&')
-    })).then(res=>{
-        return Promise.resolve(res.data)
-    },errorProcess)
+    })).then(successProcess,errorProcess)
 }
 
 export const $delete = (url, paramsObj={}, cancelToken)=>{
     let configObj = generateRequestObj('delete',url,paramsObj,cancelToken);
-    return axios(configObj).then(res=>{
-        return Promise.resolve(res.data)
-    },errorProcess)
+    return axios(configObj).then(successProcess,errorProcess)
 }

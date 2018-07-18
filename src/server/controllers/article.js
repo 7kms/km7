@@ -1,11 +1,11 @@
 import {responseData} from '../utils'
 import Model from '../model/article'
-
+import DAO from '../dao'
 class Article {
 
     list = async (req,res)=>{
-        const {categoryId} = req.params;
-        let list = await Model.findAll({where:{categoryId},raw: true})
+        const {category} = req.params;
+        let list = await DAO.execute(`SELECT * from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}'`)
         res.json(responseData(200,{list}))
     }
 

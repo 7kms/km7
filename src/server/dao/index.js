@@ -59,7 +59,7 @@ class DAO {
         return new Promise((resolve)=>{
             let start = new Date()
             logger.log(`begin ${sql}`)
-            this.sequelize.query(sql).spread((results, metadata)=>{
+            this.sequelize.query(sql,{raw: true}).spread((results, metadata)=>{
                 let end = new Date()
                 logger.trace(`cost ${end-start} , ${sql}`)
                 // logger.info(metadata)

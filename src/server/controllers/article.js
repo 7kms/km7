@@ -1,11 +1,26 @@
 import {responseData} from '../utils'
 import Model from '../model/article'
 import DAO from '../dao'
+import redisService from '../service/redis-service'
 class Article {
 
     list = async (req,res)=>{
         const {category} = req.params;
-        let list = await DAO.execute(`SELECT * from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}'`)
+        let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tag,a.createdAt,a.updatedAt,c.name category, c.id categoryId from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}'`)
+        for(let item of list){
+            let tagArr = item.tag.split('-');
+            let arr = [];
+            for(let tagId of tagArr){
+               let tag =  await redisService.getTag(String(tagId));
+               tag && arr.push(tag)
+            }
+            item.tag = arr;
+            item.category = {
+                name: item.category,
+                id: item.categoryId
+            }
+            delete item.categoryId;
+        }
         res.json(responseData(200,{list}))
     }
 

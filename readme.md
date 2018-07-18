@@ -37,6 +37,12 @@ Then you need a third server to distribute the request.The config can be below.
 ### database
 
 1. mysql
-> all the relation data
+> Use orm framework [sequelizejs](http://docs.sequelizejs.com/) to connect to mysql server
+
+
+
+
+
+
 2. redis
 > redis for user session persistence

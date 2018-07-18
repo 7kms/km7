@@ -1,5 +1,6 @@
 import {responseData} from '../utils';
 import Model from '../model/category';
+import redisService from '../service/redis-service'
 
 class Category {
     list = async (req,res)=>{
@@ -15,6 +16,7 @@ class Category {
         const {name} = req.body;
         try{
             await Model.update({name},{where:{id}})
+            await redisService.refreshNav()
             res.json(responseData(200,{msg: 'success'}))
         }catch(e){
             res.json(responseData(500,e))

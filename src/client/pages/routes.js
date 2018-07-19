@@ -6,7 +6,7 @@ import About from './about/index'
 const routes = [
     {
         component: App,
-        path: '/:category?',
+        // path: '/:category?',
         routes: [
             { 
                 path: '/about',
@@ -18,7 +18,7 @@ const routes = [
                 component: Main
             },
             {
-                path: '/:category/:id',
+                path: '/article/:id',
                 exact: true,
                 component: Article
             }

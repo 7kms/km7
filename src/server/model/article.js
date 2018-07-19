@@ -20,7 +20,9 @@ import Category from './category'
         FOREIGN KEY(`category`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
         FOREIGN KEY(`userId`) REFERENCES `user` (`id`)
     );
+    ALTER TABLE `articles` ADD INDEX (`categoryId`, `tags`);
 
+    ALTER TABLE `articles` RENAME COLUMN `tag` TO `tags`;
     ALTER TABLE `articles` ADD COLUMN `keywords` VARCHAR(255)  AFTER `title`;
 
     ALTER TABLE `articles` MODIFY COLUMN `keywords` VARCHAR(255)  NOT NULL;
@@ -66,7 +68,7 @@ const Article = DAO.sequelize.define('article',{
             key: 'id'
         }
     },
-    tag: {
+    tags: {
         type: Sequelize.STRING, 
         allowNull: false
     }

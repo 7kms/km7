@@ -5,7 +5,7 @@ const router = express.Router()
 
 
 // router.get('/list', controller.list)
-router.get('/list/:category', controller.list)
+router.get('/list/:category?', controller.list)
 router.get('/:id', controller.detail)
 
 

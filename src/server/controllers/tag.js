@@ -1,6 +1,7 @@
 import {responseData} from '../utils'
 import Model from '../model/tag';
-import DAO from '../dao'
+import DAO from '../dao';
+import redisService from '../service/redis-service'
 
 
 class Tag {
@@ -26,12 +27,14 @@ class Tag {
         const {id} = req.params;
         const obj = req.body;
         await Model.update(obj,{where:{id}})
+        await redisService.refreshTags()
         res.json(responseData(200,{msg: 'success'}))
     }
     insert = async (req,res)=>{
         let {name,categoryId} = req.body;
         try{
             let result = await Model.create({name,categoryId})
+            await redisService.refreshTags()
             res.json(responseData(200,{result}))
         }catch(e){
             res.json(responseData(500,{msg: e.sqlMessage}))
@@ -41,6 +44,7 @@ class Tag {
         const {id} = req.params;
         try{
             await Model.destroy({where:{id}})
+            await redisService.refreshTags()
             res.json(responseData(200))
         }catch(e){
             res.json(responseData(500,e))

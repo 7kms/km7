@@ -2,6 +2,7 @@
 html{
     height: 100%;
     font-size: @base-size;
+    background-color: @bg-color;
 }
 html,body,div,h1,h2,h3,h4,h5,h6,header,article,nav,ul,li,table,tr,td,th,tbody,span,p,a,b,strong,input,textarea,form,input{
     margin: 0;
@@ -16,10 +17,11 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     color: #4e4e4e;
     word-wrap: break-word;
-    margin: 10px 0
 }
 body{
     overflow: auto;
+    color: @text-color-normal;
+    font-size: 14*@px;
     min-width: 320*@px;
     font-family: -apple-system,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -36,6 +38,15 @@ input,textarea{
     outline: none;
     border: none;
 }
+// [flex]{
+//     display:  flex;
+//     &[aligin='center']{
+//         align-items: center;
+//     }
+//     &[justify='center']{
+//        justify-content: center;
+//     }
+// }
 :global{
     .fl{
         float: left;
@@ -45,5 +56,40 @@ input,textarea{
     }
     .app-root{
         padding-top: @navH;
+    }
+    .icon{
+        display: block;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 16*@px;
+        height: 16*@px;
+    }
+    .gray{
+        color: @text-color-gray;
+    }
+    .small{
+        font-size: 12*@px;
+    }
+    .flex-center{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .flex-between{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .flex-end{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .flex-start{
+        display: flex;
+        align-items: center;
+    }
+    .flex{
+        display: flex;
     }
 }

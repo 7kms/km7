@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 // import PropTypes from 'prop-types'
-import KM7Page from '~components/KM7Page'
+import PageHead from '~components/PageHead'
 
 export default class Page extends Component{
     // static propTypes = {
@@ -8,7 +8,7 @@ export default class Page extends Component{
     // }
     render(){
         return (
-            <KM7Page header={{title:'About'}}>About</KM7Page>
+            <PageHead header={{title:'About'}}>About</PageHead>
         )
     }
 }

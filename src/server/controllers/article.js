@@ -1,20 +1,29 @@
 import {responseData} from '../utils'
 import Model from '../model/article'
+import categoryModel from '../model/category'
 import DAO from '../dao'
 import redisService from '../service/redis-service'
 class Article {
-
+    transfromTagByStr = async (str)=>{
+        if(!str)return str;
+        let tagArr = str.split('-');
+        let arr = [];
+        for(let tagId of tagArr){
+            let tag =  await redisService.getTag(String(tagId));
+            tag && arr.push(tag)
+        }
+        return arr;
+    }
     list = async (req,res)=>{
-        const {category} = req.params;
-        let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tag,a.createdAt,a.updatedAt,c.name category, c.id categoryId from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}'`)
+        let {category} = req.params;
+        const {page = 0, size = 20} = req.query;
+        if(!category){
+            category = (await redisService.getNav())[0].key;
+        }
+        let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tags,a.createdAt,a.updatedAt,c.name category, c.id categoryId 
+                                    from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}' limit ${page*size}, ${size}`)
         for(let item of list){
-            let tagArr = item.tag.split('-');
-            let arr = [];
-            for(let tagId of tagArr){
-               let tag =  await redisService.getTag(String(tagId));
-               tag && arr.push(tag)
-            }
-            item.tag = arr;
+            item.tags = await this.transfromTagByStr(item.tags);
             item.category = {
                 name: item.category,
                 id: item.categoryId
@@ -26,7 +35,9 @@ class Article {
 
     detail = async (req,res)=>{
         let {id} = req.params;
-        let article = await Model.findOne({where:{id}})
+        let article = await Model.findOne({where:{id}, row: true})
+        article.category = await categoryModel.findOne({where:{id: article.categoryId}})
+        article.tags = await this.transfromTagByStr(article.tags);
         res.send(responseData(200,{article}))
     }
 

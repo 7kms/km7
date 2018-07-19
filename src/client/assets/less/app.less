@@ -1,38 +1,18 @@
 @import "./const.less";
 
-.nav{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: @navH;
-    z-index: 100;
-    background-color: #fff;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
-    transition: all .2s;
-    transform: translateZ(0);
-}
-.nav-content{
-    max-width: 960*@px;
-    margin: 0 auto;
-    font-size: 14*@px;
-    clear: both;
-    overflow: hidden;
-    color: #71777c;
-}
-.nav-list{
-    height: @navH;
+.wrap{
+    margin-top: @navH;
     display: flex;
-    align-items: stretch;
-}
-.nav-item{
-    display: flex;
-    align-items: center;
-    padding: 0 12*@px;
-    &:hover,&.active{
-        color: @active-color;
-    }
+    justify-content: center;
 }
 .main{
-    margin-top: @navH;
+    max-width: 700*@px;
+    flex: 1;
+}
+.aside{
+    width: 240*@px;
+    margin-left: 22*@px;
+    @media (max-width: 700px){
+        display: none;
+    }
 }

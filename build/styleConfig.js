@@ -12,7 +12,6 @@ const cssLoaderRule = {
       localIdentName: '[local]-[hash:base64:6]'
     }
 }
-
 const postcssLoaderRule = {
     loader: require.resolve('postcss-loader'),
     options: {
@@ -62,6 +61,7 @@ const getLoaderRulesByType = (type)=>{
 const generateRuleModule = (type, isServerSide) => {
     const obj = {
         test: getRegularExpressionByType(type),
+        include: /src/,
         use : getLoaderRulesByType(type)
     }
     // if(isServerSide){
@@ -73,9 +73,9 @@ const generateRuleModule = (type, isServerSide) => {
 
 module.exports = (isServerSide) => {
     let bassArr = ['css','less']
-
-
     return bassArr.map(item => {
         return generateRuleModule(item,isServerSide)
     })
 }
+
+

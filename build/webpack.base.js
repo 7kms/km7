@@ -19,7 +19,8 @@ const config = {
             '~data': resolve(__dirname, '../src/client/data'),
             '~actions': resolve(__dirname, '../src/client/redux/actions'),
             '~components': resolve(__dirname, '../src/client/components'),
-            "~images": resolve(__dirname, '../src/client/assets/images')
+            "~images": resolve(__dirname, '../src/client/assets/images'),
+            "~decorates": resolve(__dirname, '../src/client/decorates')
           },
     },
     module:{
@@ -30,6 +31,10 @@ const config = {
                 enforce: 'pre',
                 loader: require.resolve('eslint-loader')
             },
+
+            // {
+            //   rules:[]
+            // },
             {
                 // "oneOf" will traverse all following loaders until one will
                 // match the requirements. When no loader matches it will fall
@@ -45,10 +50,15 @@ const config = {
                       name: 'static/img/[name].[hash:6].[ext]',
                     },
                   },
-                  // {
-                  //   test: /\.json$/,
-                  //   loader: require.resolve('json-loader')
-                  // },
+                  {
+                    test: /.css$/,
+                    include: /node_modules/,
+                    // resourceQuery: 'inline',
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        require.resolve('css-loader')
+                    ]
+                   },
                   {
                     test: [/manifest.json$/],
                     loader: require.resolve('file-loader'),

@@ -9,33 +9,48 @@ import { renderRoutes } from 'react-router-config'
 import routes from './pages/routes'
 import { Provider } from 'react-redux'
 import configureStore from './redux/store'
+import initPageProps from '~service/page-props'
 
-// Grab the state from a global variable injected into the server-generated HTML
-const preloadedState = window.__PRELOADED_STATE__
-// Allow the passed state to be garbage-collected
-delete window.__PRELOADED_STATE__
 
-const store = configureStore(preloadedState)
+const prepare = ()=>{
 
-const App = ({routes})=>{
-    return (
-        <Provider store={store}>
-            <BrowserRouter>
-                {renderRoutes(routes)}
-            </BrowserRouter>
-        </Provider>
-    )
+    // Grab the state from a global variable injected into the server-generated HTML
+    const preloadedState = window.__PRELOADED_STATE__
+    // Allow the passed state to be garbage-collected
+    delete window.__PRELOADED_STATE__
+
+    const preloadProps = window.__PRELOADED_PAGEPROPS__
+
+    const store = configureStore(preloadedState)
+    initPageProps.init(preloadProps)
+
+    return store
 }
-App.propTypes = {routes: PropTypes.array.isRequired}
 
-hydrate(<App routes={routes}/>, document.getElementById('root'))
 
-if(process.env.NODE_ENV === 'development'){
-    if(module.hot){
-        module.hot.accept(['./pages/routes'], function() {
-            const newRoutes = require('./pages/routes').default
-            render(<App routes={newRoutes}/>, document.getElementById('root'))
-        })
+const bootstrap = ()=>{
+    const store = prepare();
+    const App = ({routes})=>{
+        return (
+            <Provider store={store}>
+                <BrowserRouter>
+                    {renderRoutes(routes)}
+                </BrowserRouter>
+            </Provider>
+        )
+    }
+    App.propTypes = {routes: PropTypes.array.isRequired}
+    
+    hydrate(<App routes={routes}/>, document.getElementById('root'))
+
+    if(process.env.NODE_ENV === 'development'){
+        if(module.hot){
+            module.hot.accept(['./pages/routes'], function() {
+                const newRoutes = require('./pages/routes').default
+                render(<App routes={newRoutes}/>, document.getElementById('root'))
+            })
+        }
     }
 }
 
+bootstrap();

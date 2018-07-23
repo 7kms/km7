@@ -32,7 +32,7 @@ module.exports = merge({
     // new webpack.HotModuleReplacementPlugin(),
     //https://github.com/jantimon/html-webpack-plugin#configuration
     new HtmlWebpackPlugin({
-      title: 'react blog',
+      title: 'km7',
       template: pathConfig.htmlTemplate
     }) 
   ],

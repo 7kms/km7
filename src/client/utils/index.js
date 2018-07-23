@@ -158,3 +158,8 @@ export const UTCTimestamp = ()=>{
     let date = new Date();
     return date.getTime() + date.getTimezoneOffset() * 60000;
 }
+
+
+export const isServer = ()=>{
+    return typeof window === 'undefined';
+}

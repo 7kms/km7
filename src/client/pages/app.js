@@ -11,8 +11,7 @@ let cx = classNames.bind(styles)
 export default class App extends Component{
     static propTypes = {
         route: PropTypes.object.isRequired,
-        match: PropTypes.object.isRequired,
-        dispatch: PropTypes.func.isRequired
+        match: PropTypes.object.isRequired
     }
    
     // static loadInitialData = (store)=>{

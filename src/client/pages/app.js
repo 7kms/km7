@@ -37,7 +37,10 @@ class Header extends PureComponent{
     render(){
         return (
             <header className={cx('header')}>
-                <h2>slogan</h2>
+                <h2 className={cx('slogan','flex-start')}>
+                    <a href="/" className={cx('icon','km')}></a>
+                    <span className={cx('text')}>畅谈7km, 忆二塘重交</span>
+                </h2>
                 {/* <Nav nav={this.props.nav} onChange={this.onNavChange}/> */}
             </header>
         )

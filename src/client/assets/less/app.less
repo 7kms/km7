@@ -1,5 +1,27 @@
 @import "./const.less";
 
+.header{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+}
+.slogan{
+    width: 1022*@px;
+    height: 40*@px;
+    margin: 0 auto;
+    font-size: 16*@px;
+    color: @active-color;
+    .km{
+        height: 32*@px;
+        width: 40*@px;
+        margin-right: 10*@px;
+        .imgset('~images/km');
+    }
+}
+
+
 .wrap{
     margin-top: @navH;
     display: flex;

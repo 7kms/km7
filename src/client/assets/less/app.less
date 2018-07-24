@@ -18,10 +18,13 @@
         .imgset('~images/km');
     }
     .slogan{
-        color: @active-color;
-        font-size: 16*@px;    
+        &:hover{
+            color: @active-color;
+            text-decoration: underline;
+        }
+        font-size: 16*@px;
     }
-    .about{
+    .about:hover{
         text-decoration: underline;
     }
 }

@@ -39,10 +39,10 @@ class Header extends PureComponent{
         return (
             <header className={cx('header')}>
                 <h2 className={cx('bar','flex-between')}>
-                    <Link className="flex-start" to="/" replace={true}>
+                    <a className="flex-start" href="/">
                         <i className={cx('icon','km')}/>
                         <span className={cx('slogan')}>畅谈7km, 忆二塘重交</span>
-                    </Link>
+                    </a>
                     <Link to='/about' className={cx('about')}>关于</Link>
                 </h2>
             </header>

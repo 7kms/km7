@@ -33,21 +33,14 @@ class Home extends PureComponent{
         page: 0,
         size: 20
     }
-    constructor({match,navList}){
+    constructor(props){
         super()
-        this.defaultCategory = navList[0].key;
-        const {category=this.defaultCategory} = match.params;
-        const patternStr = navList.map(item=>item.key).join('|')
-        const reg = new RegExp(`${patternStr}`,'ig')
-        const intialObj = {category}
-        if(!reg.test(category)){
-            intialObj.needRedirect = true;
+        const initialState = Home.generateInitialState(props)
+        this.state = initialState;
+        if(!initialState.waiting){
+            this.initialed = true;
         }
-        this.state = intialObj;
         this.pageHeader = getPageMeta('首页');
-    }
-    state = {
-        params: Home.initialParams
     }
     static loadInitialData = async (store,match)=>{
         const {category} = match.params;
@@ -56,10 +49,40 @@ class Home extends PureComponent{
             store.dispatch(fetchList(category,Home.initialParams))
         ])
     }
+    static getDerivedStateFromProps = (props, state)=>{
+        const {navList} = props;
+        const {waiting} = state;
+        if(waiting && navList.length){
+            let newState = Home.generateInitialState(props)
+            newState.waiting = false;
+            return newState;
+        }
+        return null;
+    }
+    static generateInitialState = ({match,navList})=>{
+        if(!navList.length){
+            return {
+                waiting: true
+            }
+        }
+        let defaultCategory = navList[0].key;
+        const {category = defaultCategory} = match.params;
+        const patternStr = navList.map(item=>item.key).join('|')
+        const reg = new RegExp(`^(${patternStr})$`,'ig')
+        const initialObj = {
+            category,
+            params: {...Home.initialParams}
+        }
+        if(!reg.test(category)){
+            initialObj.needRedirect = true;
+        }
+        return initialObj
+    }
     getList = (params)=>{
-        const {dispatch,match:{params:{category}}} = this.props;
+        const {dispatch} = this.props;
         params = params || this.state.params;
-        dispatch(fetchList(category,params))
+        // console.log(this.state.category)
+        dispatch(fetchList(this.state.category,params))
     }
     loadMore = ()=>{
         const {params} = this.state;
@@ -67,14 +90,20 @@ class Home extends PureComponent{
         this.getList(params)
     }
     componentDidMount(){
-        const {articleList} = this.props;
-        if(!articleList.length){
-            this.getList()
+        console.log('-------componentDidMount-------')
+        const { waiting } = this.state;
+        if(waiting){
+            this.props.dispatch(fetchNav())
         }
     }
-    componentDidUpdate(){
+    componentDidUpdate(prevProps,prevState){
+        // console.log('-------componentDidUpdate-------prevProps,prevState,this.props,this.state', prevProps, prevState,this.props,this.state)
+        const { needRedirect, waiting } = this.state;
         const {articleList} = this.props;
-        if(!articleList.length){
+        if(!this.initialed && !waiting && !needRedirect){
+            this.initialed = true;
+            this.getList()
+        } else if(this.initialed && articleList.length == 0){
             this.getList()
         }
     }
@@ -82,13 +111,19 @@ class Home extends PureComponent{
        const {id} = item;
        this.props.history.push(`/article/${id}`);
     }
-    onNavChange = ()=>{
+    onNavChange = (category)=>{
+        // console.log(category)
+        this.setState({
+            category
+        })
         this.props.dispatch(emptyList())
     }
     render(){
         const {articleList,navList} = this.props;
-        const {needRedirect} = this.state;
-        const {category=this.defaultCategory} = this.props.match.params;
+        const {needRedirect, waiting, category} = this.state;
+        if(waiting){
+            return null;
+        }
         if(needRedirect){
             return <Redirect to="/"/>
         }
@@ -107,10 +142,11 @@ class Nav extends PureComponent{
         list: PropTypes.array.isRequired,
         onChange: PropTypes.func.isRequired
     }
-    changeNav = (newCate)=>{
+    changeNav = (e,newCate)=>{
+        // e.preventDefault();
         const {category} = this.props
         if(newCate !== category){
-            this.props.onChange(category)
+            this.props.onChange(newCate)
         }
     }
     render(){
@@ -120,7 +156,7 @@ class Nav extends PureComponent{
                 <div className={cx('nav-content')}>
                     <ul className={cx('nav-list','fl')}>
                         {list.map((item,index)=> <li key={index} className={cx('nav-item',{active: item.key === category})}>
-                            <Link onClick={()=>this.changeNav(item.key)} to={`/${item.key}`}>{item.name}</Link>
+                            <Link onClick={(e)=>this.changeNav(e,item.key)} to={`/${item.key}`}>{item.name}</Link>
                         </li>)}
                     </ul>
                 </div>

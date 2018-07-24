@@ -1,5 +1,6 @@
 import React,{ Component,Fragment, PureComponent } from 'react'
 import { renderRoutes } from 'react-router-config'
+import { Link } from 'react-router-dom'
 import Aside from '~components/aside'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
@@ -37,11 +38,13 @@ class Header extends PureComponent{
     render(){
         return (
             <header className={cx('header')}>
-                <h2 className={cx('slogan','flex-start')}>
-                    <a href="/" className={cx('icon','km')}></a>
-                    <span className={cx('text')}>畅谈7km, 忆二塘重交</span>
+                <h2 className={cx('bar','flex-between')}>
+                    <Link className="flex-start" to="/" replace={true}>
+                        <i className={cx('icon','km')}/>
+                        <span className={cx('slogan')}>畅谈7km, 忆二塘重交</span>
+                    </Link>
+                    <Link to='/about' className={cx('about')}>关于</Link>
                 </h2>
-                {/* <Nav nav={this.props.nav} onChange={this.onNavChange}/> */}
             </header>
         )
     }

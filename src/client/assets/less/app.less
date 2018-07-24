@@ -7,23 +7,28 @@
     width: 100%;
     background-color: #fff;
 }
-.slogan{
+.bar{
     width: 1022*@px;
-    height: 40*@px;
+    height: @navH;
     margin: 0 auto;
-    font-size: 16*@px;
-    color: @active-color;
     .km{
         height: 32*@px;
         width: 40*@px;
         margin-right: 10*@px;
         .imgset('~images/km');
     }
+    .slogan{
+        color: @active-color;
+        font-size: 16*@px;    
+    }
+    .about{
+        text-decoration: underline;
+    }
 }
 
-
 .wrap{
-    margin-top: @navH;
+    margin-top: 2*@navH;
+    padding-top: 10*@px;
     display: flex;
     justify-content: center;
     align-items: flex-start;

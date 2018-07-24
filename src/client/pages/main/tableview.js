@@ -43,7 +43,7 @@ class TableView extends PureComponent{
     }
     render(){
         const {list} = this.props;
-        return (<ul className={cx('list')}>
+        return (<ul className={cx('table-view','list')}>
             {list.map((item)=><Item key={item.id} info={item} onClick = {this.props.onClick}/>)}
         </ul>)
     }

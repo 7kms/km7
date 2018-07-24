@@ -2,6 +2,7 @@ import React,{ PureComponent } from 'react'
 import { Link , Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {getPageMeta} from '~data'
 import PageHead from '~components/PageHead'
 import {fetchList,emptyList} from '~actions/article'
 import {fetchNav} from '~actions/nav'
@@ -42,20 +43,8 @@ class Home extends PureComponent{
         if(!reg.test(category)){
             intialObj.needRedirect = true;
         }
-        this.state = intialObj
-    }
-    header = {
-        title: 'km7 突破web前端开发',
-        metas: [
-            {
-                name: 'keywords',
-                content: 'km7, web前端突破, web前端, 突破web前端, 突破前端开发, 大前端'
-            },
-            {
-                name: 'description',
-                content: '突破web前端开发, km7的前端开发日志, 记录前端开发中的重难点, 突破前端开发'
-            }
-        ]
+        this.state = intialObj;
+        this.pageHeader = getPageMeta('首页');
     }
     state = {
         params: Home.initialParams
@@ -104,7 +93,7 @@ class Home extends PureComponent{
             return <Redirect to="/"/>
         }
         return (
-            <PageHead header={this.header}>
+            <PageHead header={this.pageHeader}>
                 <Nav list={navList} category={category} onChange={this.onNavChange}/>
                 <TableView list={articleList} onLoadMore={this.loadMore} onClick={this.goDetail}/>
             </PageHead>)

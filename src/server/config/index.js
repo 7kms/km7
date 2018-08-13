@@ -10,13 +10,13 @@ const base = {
 const dev = {
     port: 6802,
     mysql: {
-        host     : 'localhost',
-        user     : 'root',
+        host     : '192.168.45.33',
+        user     : 'test',
         password : '111111',
         database : 'km7test'
     },
     redis:{
-        host: 'localhost',
+        host: '192.168.45.33',
         port: 6379
     },
     redis_key_prefix: 'km7test_'
@@ -32,7 +32,7 @@ const prod = {
     },
     redis:{
         host: 'localhost',
-        port: 6380
+        port: 6379
     },
     redis_key_prefix: 'km7_'
 }

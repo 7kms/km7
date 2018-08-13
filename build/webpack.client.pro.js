@@ -1,25 +1,26 @@
 'use strict';
-
+process.env.NODE_ENV = 'production'
 const path = require('path')
 const pathConfig = require('./pathConfig')
-const isProduct = process.env.NODE_ENV === 'production'
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const styleConfig = require('./styleConfig')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = merge({
   name: 'client',
-  mode: isProduct ? 'production' : 'development',
-  devtool: 'source-map',
+  mode: 'production',
+  devtool: false,
   target: 'web',
   entry: {
     app: pathConfig.clientEntry
   },
   output: {
       path: pathConfig.clientOutput,
-      filename: isProduct ? 'static/[name].[contenthash:6].js' : 'static/[name].js',
+      filename: 'js/[name].[contenthash:6].js',
       publicPath: pathConfig.staticPublicPath,
       libraryTarget: "umd"
   }, 
@@ -52,6 +53,15 @@ module.exports = merge({
       maxInitialRequests: 3,
       automaticNameDelimiter: '~',
       name: true
-    }
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        // include: [pathConfig.appSrc],
+        cache: true,
+        parallel: true,
+        sourceMap: false // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   }
 },baseConfig)

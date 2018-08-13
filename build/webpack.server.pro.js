@@ -1,19 +1,20 @@
 'use strict';
 
-const isProduct = process.env.NODE_ENV === 'production'
+process.env.NODE_ENV = 'production'
 const path = require('path')
 const pathConfig = require('./pathConfig')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const styleConfig = require('./styleConfig')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // https://webpack.js.org/plugins/mini-css-extract-plugin/#install
 
-console.log('isProduct = %d',isProduct)
 module.exports = merge({
   name: 'server',
-  mode: 'development',
-  devtool: 'source-map',
+  mode: 'production',
+  // devtool: 'source-map',
   target: 'node',
   entry:  pathConfig.serverEntry,
   output: {
@@ -38,6 +39,15 @@ module.exports = merge({
       maxInitialRequests: 3,
       automaticNameDelimiter: '~',
       name: true
-    }
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        // include: [pathConfig.appSrc],
+        cache: true,
+        parallel: true,
+        sourceMap: false // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   }
 },baseConfig)

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {initPageProps} from '~decorates'
 import {$get} from '~utils/api'
 import PageHead from '~components/PageHead'
-import Markdown from '~components/Markdown'
+import Markdown from '~components/MarkDown'
 import classNames from 'classnames/bind'
 import styles from '~less/article.less'
 let cx = classNames.bind(styles)

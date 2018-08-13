@@ -9,7 +9,7 @@
     "build": "npm run build:client && npm run build:server",
     "dev": "node bootstrap/index.js --port 6801 --client",
     "server": "nodemon bootstrap/index.js --api",
-    "release": "npm run build &&  NODE_ENV=production node bootstrap/index.js"
+    "release": "npm run build &&  pm2 restart ecosystem.config.js"
   },
   "dependencies": {
     "@types/react": "^16.3.14",

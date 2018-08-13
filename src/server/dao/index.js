@@ -1,4 +1,4 @@
-import Sequelize from 'Sequelize'
+import Sequelize from 'sequelize'
 import config from '../config'
 const {mysql} = config
 class DAO {

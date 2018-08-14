@@ -37,6 +37,6 @@ const prod = {
     redis_key_prefix: 'km7_'
 }
 
-const finallyConfig = isProduction ? Object.assign({},base,dev) : Object.assign({},base,dev)
+const finallyConfig = isProduction ? Object.assign({},base,prod) : Object.assign({},base,dev)
 // console.log(finallyConfig)
 export default finallyConfig

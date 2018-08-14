@@ -1,4 +1,4 @@
-import Sequelize from 'Sequelize'
+import Sequelize from 'sequelize'
 import DAO from '../dao'
 import User from './user'
 import Category from './category'

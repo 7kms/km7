@@ -38,7 +38,7 @@ class App {
     initRouter = () =>{
         logger.log('init router')
         const app = this.app;
-        app.use(pathConfig.staticPublicPath, express.static(resolve(pathConfig.clientOutput), {
+        app.use('/static', express.static(resolve(pathConfig.clientOutput), {
           maxAge: 0,
           index: false
         }));

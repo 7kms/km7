@@ -72,6 +72,7 @@ class Article {
             let result = await Model.create(obj)
             res.json(responseData(200,{result}))
         }catch(e){
+            logger.error(e)
             res.json(responseData(500,{msg: e.sqlMessage}))
         }
     }

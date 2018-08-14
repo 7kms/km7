@@ -13,13 +13,13 @@ const dev = {
         host     : '192.168.45.33',
         user     : 'test',
         password : '111111',
-        database : 'km7test2'
+        database : 'km7'
     },
     redis:{
         host: '192.168.45.33',
         port: 6379
     },
-    redis_key_prefix: 'km7test2_'
+    redis_key_prefix: 'km7_'
 }
 
 const prod = {

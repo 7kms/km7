@@ -13,9 +13,9 @@ class Category {
     }
     update = async (req,res)=>{
         const {id} = req.params;
-        const {name} = req.body;
+        const {name,key} = req.body;
         try{
-            await Model.update({name},{where:{id}})
+            await Model.update({name,key},{where:{id}})
             await redisService.refreshNav()
             res.json(responseData(200,{msg: 'success'}))
         }catch(e){
@@ -23,9 +23,9 @@ class Category {
         }
     }
     insert = async (req,res)=>{
-        let {name} = req.body;
+        let {name,key} = req.body;
         try{
-            let result = await Model.create({name})
+            let result = await Model.create({name,key})
             res.json(responseData(200,{result}))
         }catch(e){
             res.json(responseData(500,{msg: e.sqlMessage}))

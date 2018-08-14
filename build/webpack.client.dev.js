@@ -1,11 +1,10 @@
 'use strict';
 
-// const path = require('path')
+process.env.NODE_ENV = 'development'
 const pathConfig = require('./pathConfig')
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
 const styleConfig = require('./styleConfig')
 
 module.exports = merge({

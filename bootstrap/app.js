@@ -2,11 +2,15 @@ import program from 'commander';
 import KM7App from './KM7App';
 import BootStrap from '../src/server/bootstrap';
 
-const isDev = process.env.NODE_ENV !== 'production';
 program.option('-p, --port <n>')
        .option('--client')
        .option('--api')
-       .parse(process.argv)
+       .option('--production')
+       .parse(process.argv);
+if(program.production){
+    process.env.NODE_ENV =  'production'
+}
+const isDev = process.env.NODE_ENV !== 'production';
 
 // console.log('program.port %j',program.port)
 // console.log('program.client',program.client)

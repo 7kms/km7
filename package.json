@@ -7,8 +7,9 @@
     "build:client": "cross-env NODE_ENV=production && webpack --config ./build/webpack.client.pro.js --progress --color",
     "build:server": "webpack --config ./build/webpack.server.pro.js --progress --color",
     "build": "npm run build:client && npm run build:server",
-    "dev": "node bootstrap/index.js --port 6801 --client",
-    "server": "nodemon bootstrap/index.js --api",
+    "dev:client": "node bootstrap/index.js --port 6801 --client",
+    "dev:server": "nodemon bootstrap/index.js --api",
+    "start": "node bootstrap/index.js",
     "release": "npm run build &&  pm2 restart ecosystem.config.js"
   },
   "dependencies": {
@@ -53,6 +54,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.19",
     "commander": "^2.16.0",

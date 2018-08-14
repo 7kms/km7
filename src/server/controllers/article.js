@@ -15,22 +15,35 @@ class Article {
         return arr;
     }
     list = async (req,res)=>{
-        let {category} = req.params;
-        const {page = 0, size = 20} = req.query;
-        if(!category){
-            category = (await redisService.getNav())[0].key;
-        }
-        let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tags,a.createdAt,a.updatedAt,c.name category, c.id categoryId 
-                                    from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}' limit ${page*size}, ${size}`)
-        for(let item of list){
-            item.tags = await this.transfromTagByStr(item.tags);
-            item.category = {
-                name: item.category,
-                id: item.categoryId
+        try{
+            let {category} = req.params;
+            const {page = 0, size = 20} = req.query;
+            if(!category){
+                let navList = await redisService.getNav();
+                if(navList.length){
+                    category = navList[0].key;
+                }else{
+                    res.json(responseData(200,{list:[]}))
+                    return;
+                }
             }
-            delete item.categoryId;
+            let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tags,a.createdAt,a.updatedAt,c.name category, c.id categoryId 
+                                        from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}' limit ${page*size}, ${size}`)
+            for(let item of list){
+                item.tags = await this.transfromTagByStr(item.tags);
+                item.category = {
+                    name: item.category,
+                    id: item.categoryId
+                }
+                delete item.categoryId;
+            }
+            res.json(responseData(200,{list}))
+        }catch(e){
+            res.status(500).end();
+            logger.error(e);
+            throw new Error(e)
         }
-        res.json(responseData(200,{list}))
+        
     }
 
     detail = async (req,res)=>{

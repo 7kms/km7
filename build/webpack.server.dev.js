@@ -1,6 +1,5 @@
 'use strict';
-
-const isProduct = process.env.NODE_ENV === 'production'
+process.env.NODE_ENV = 'development'
 const path = require('path')
 const pathConfig = require('./pathConfig')
 const merge = require('webpack-merge')
@@ -8,8 +7,6 @@ const baseConfig = require('./webpack.base')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const styleConfig = require('./styleConfig')
 // https://webpack.js.org/plugins/mini-css-extract-plugin/#install
-
-console.log('isProduct = %d',isProduct)
 module.exports = merge({
   name: 'server',
   mode: 'development',

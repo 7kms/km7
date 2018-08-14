@@ -13,17 +13,17 @@ const dev = {
         host     : '192.168.45.33',
         user     : 'test',
         password : '111111',
-        database : 'km7test'
+        database : 'km7test2'
     },
     redis:{
         host: '192.168.45.33',
         port: 6379
     },
-    redis_key_prefix: 'km7test_'
+    redis_key_prefix: 'km7test2_'
 }
 
 const prod = {
-    port: 6902,
+    port: 6702,
     mysql: {
         host     : 'localhost',
         user     : 'root',
@@ -37,6 +37,6 @@ const prod = {
     redis_key_prefix: 'km7_'
 }
 
-const finallyConfig = isProduction ? Object.assign({},base,prod) : Object.assign({},base,dev)
+const finallyConfig = isProduction ? Object.assign({},base,dev) : Object.assign({},base,dev)
 // console.log(finallyConfig)
 export default finallyConfig

@@ -14,8 +14,13 @@ let port = config.port
 class Server {
   constructor(){
     this.app = express()
+    this.prepare()
   }
-  start = async ()=>{
+  /**
+   * prepare阶段, 先匹配/api部分路由
+   */
+  prepare = ()=>{
+    logger.log(`app prepare ...`)
     const app = this.app;
     app.use(session({
       secret: 'cqjiaotong',
@@ -25,6 +30,10 @@ class Server {
       store: new RedisStore(config.redis)
     }))
     app.use('/api', bodyParser.urlencoded({ extended: false }), bodyParser.json(), routers)
+  }
+  start = async ()=>{
+    logger.info(`app start ...`)
+    const app = this.app;
     app.use((req,res)=>{
       logger.warn(`404, ${req.originalUrl}`)
       res.sendStatus(404)

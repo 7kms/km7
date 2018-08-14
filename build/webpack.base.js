@@ -5,7 +5,7 @@ const pathConfig = require('./pathConfig')
 const isProduct = process.env.NODE_ENV === 'production'
 const resolve = path.resolve
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 // const styleConfig = require('./styleConfig')
 // https://webpack.js.org/configuration/
 const config = {
@@ -48,7 +48,7 @@ const config = {
                     loader: require.resolve('url-loader'),
                     options: {
                       limit: 512,
-                      name: 'img/[name].[hash:6].[ext]',
+                      name: '/img/[name].[hash:6].[ext]',
                     },
                   },
                   {
@@ -130,13 +130,13 @@ const config = {
         ]
     },
     plugins: [
+      new CaseSensitivePathsPlugin(),
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: "css/[name].[contenthash:6].css",
         chunkFilename: "css/[name].[contenthash:6].css"
-      }),
-      new CleanWebpackPlugin([pathConfig.clientOutput,pathConfig.serverOutput])
+      })
     ],
     stats: "errors-only"
 }

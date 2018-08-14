@@ -1,9 +1,10 @@
 import express from 'express'
-import aritcleRouter from './article'
 import navRouter from './nav'
 import userRouter from './user'
 import catetoryRouter from './category'
 import tagRouter from './tag'
+import aritcleRouter from './article'
+
 import Permission from '../controllers/permission'
 const router = express.Router()
 
@@ -15,7 +16,7 @@ router.use('*', (req,res,next)=>{
         let end = new Date(); 
         logger.log(`<-- api response: ${req.originalUrl}, ${end-start}`)
     }
-    next()
+    next()  
     res.once('close', calResponseTime);
 })
 router.use('/user', userRouter)

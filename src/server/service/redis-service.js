@@ -50,7 +50,10 @@ class RedisService{
        list.forEach(tag=>{
            arr = arr.concat(tag.id,tag.name)
        })
-       this.client.hset(this.redis_tag_dict,arr);
+       if(arr.length){
+        this.client.hset(this.redis_tag_dict,arr);
+       }
+       
     }
     getTag = async (id)=>{
         let name = await this.getValueByKey('hget',[this.redis_tag_dict, id]);

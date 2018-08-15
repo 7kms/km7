@@ -1,14 +1,27 @@
 import {responseData} from '../utils';
 import Model from '../model/category';
 import redisService from '../service/redis-service'
+import DAO from '../dao';
 
 class Category {
     list = async (req,res)=>{
        try{
-            let list = await Model.findAll({raw: true}); 
-            res.json(responseData(200,{list}))
+            let obj = {}
+            let result = await DAO.execute('select c.id, c.name, c.key, t.id tId,t.name tName from categories c left join tags t on c.id = t.categoryId');
+            result.forEach(item=>{
+                let {id,name,key,...tag} = item;
+                if(!obj[item.key]){
+                    obj[item.key] = {id,name,key,tags:[]}
+                }
+                if(tag.tId){
+                    obj[item.key].tags.push({id:tag.tId,name:tag.tName})
+                }
+            })
+            res.json(responseData(200,{list: Object.values(obj)}))
         }catch(e){
-            res.json(responseData(500,e))
+            // console.log(e)
+            // res.status(500).end(e.stack)
+            res.json(responseData(500,"category list broke"))
        }
     }
     update = async (req,res)=>{

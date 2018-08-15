@@ -38,10 +38,12 @@ class App {
     initRouter = () =>{
         logger.log('init router')
         const app = this.app;
-        app.use('/static', express.static(resolve(pathConfig.clientOutput), {
-          maxAge: 0,
-          index: false
-        }));
+        if(this.isDev){
+          app.use('/static', express.static(resolve(pathConfig.clientOutput), {
+            maxAge: 0,
+            index: false
+          }));
+        }
         app.get('*', async (req, res)=>{
           if(this.isDev){
             this.readyPromise.then(this.handel(req,res))

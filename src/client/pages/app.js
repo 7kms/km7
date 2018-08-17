@@ -29,6 +29,9 @@ export default class App extends Component{
                     </section>
                     <Aside/>
                 </div>
+                <footer className={cx('footer')}>
+                    @sd
+                </footer>
             </Fragment>
         )
     }
@@ -37,7 +40,7 @@ export default class App extends Component{
 class Header extends PureComponent{
     render(){
         return (
-            <header className={cx('header')}>
+            <div className={cx('header')}>
                 <h2 className={cx('bar','flex-between')}>
                     <a className="flex-start" href="/">
                         <i className={cx('icon','km')}/>
@@ -45,7 +48,7 @@ class Header extends PureComponent{
                     </a>
                     <Link to='/about' className={cx('about')}>关于</Link>
                 </h2>
-            </header>
+            </div>
         )
     }
 }

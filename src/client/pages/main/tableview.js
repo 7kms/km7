@@ -30,7 +30,7 @@ class Item extends PureComponent{
                     <div className={cx('flex-center')}><i className={cx('icon','icon-view')}></i><span className={cx('view')}>10</span></div>
                 </div>
             </div>
-            <div className={cx('right')}></div>
+            {/* <div className={cx('right')}></div> */}
         </li>)
     }
 }

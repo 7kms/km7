@@ -1,7 +1,8 @@
-import React,{ Component } from 'react'
+import React,{ Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {initPageProps} from '~decorates'
 import {$get} from '~utils/api'
+import {dateFormat} from '~utils'
 import PageHead from '~components/PageHead'
 import Markdown from '~components/MarkDown'
 import classNames from 'classnames/bind'
@@ -66,8 +67,17 @@ export default class Article extends Component{
         return (
             <PageHead header={this.generateHeaderByArticle(article)}>
                 <div className={cx('wrap')}>
-                    <h1>{article.title}</h1>
-                    <Markdown source={article.content}/>
+                    <Fragment>
+                        <div className={cx('flex-center','tag-list')}>
+                            <i className={cx('icon','icon-tag')}></i>
+                            {article.tags.map(tag=><span key={tag.id} className={cx('tag')}>{tag.name}</span>)}
+                        </div>
+                        <div className={cx('flex-between','info')}>
+                            <div className={cx('flex-center')}><i className={cx('icon','icon-time')}></i><span className={cx('time')}>{dateFormat(article.updatedAt,'yyyy/MM/dd HH:mm')}</span></div>                
+                            <div className={cx('flex-center')}><i className={cx('icon','icon-view')}></i><span className={cx('view')}>10</span></div>
+                        </div>
+                    </Fragment>
+                    <Markdown source={article.content} className={cx('content')}/>
                 </div>
             </PageHead>
         )

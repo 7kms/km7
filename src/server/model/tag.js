@@ -15,6 +15,8 @@ import Category from './category'
         PRIMARY KEY(`id`),
         FOREIGN KEY(`category`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
     );
+
+    ALTER TABLE `tags` ADD UNIQUE (`name`);
  * 
  * 
  */
@@ -27,7 +29,8 @@ const Tag = DAO.sequelize.define('tag',{
     },
     name: {
         type: Sequelize.STRING, 
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     categoryId: {
         type: Sequelize.INTEGER, 

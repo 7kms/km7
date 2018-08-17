@@ -53,12 +53,17 @@ class Article {
         article.tags = await this.transfromTagByStr(article.tags);
         res.send(responseData(200,{article}))
     }
-
+    bgdetail = async (req,res)=>{
+        let {id} = req.params;
+        let article = await Model.findOne({where:{id}, row: true})
+        res.send(responseData(200,{article}))
+    }
     update = async (req,res)=>{
         const {id} = req.params;
         const obj = req.body;
         try{
             await Model.update(obj,{where:{id}})
+            await redisService.refreshNav()
             res.json(responseData(200,{msg: 'success'}))
         }catch(e){
             res.json(responseData(500,e))
@@ -70,6 +75,7 @@ class Article {
         obj.userId = req.session.user.id;
         try{
             let result = await Model.create(obj)
+            await redisService.refreshNav()
             res.json(responseData(200,{result}))
         }catch(e){
             logger.error(e)
@@ -81,6 +87,7 @@ class Article {
         const {id} = req.params;
         try{
             await Model.destroy({where:{id}})
+            await redisService.refreshNav()
             res.json(responseData(200))
         }catch(e){
             if(e.name == 'SequelizeForeignKeyConstraintError'){

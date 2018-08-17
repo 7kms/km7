@@ -20,8 +20,8 @@ class Category {
             res.json(responseData(200,{list: Object.values(obj)}))
         }catch(e){
             // console.log(e)
-            // res.status(500).end(e.stack)
-            res.json(responseData(500,"category list broke"))
+            res.status(500).send(String(e));
+            // res.json(responseData(500,"category list broke"))
        }
     }
     update = async (req,res)=>{
@@ -32,7 +32,8 @@ class Category {
             await redisService.refreshNav()
             res.json(responseData(200,{msg: 'success'}))
         }catch(e){
-            res.json(responseData(500,e))
+            res.status(500).send(String(e));
+            // res.json(responseData(500,e))
         }
     }
     insert = async (req,res)=>{
@@ -41,7 +42,9 @@ class Category {
             let result = await Model.create({name,key})
             res.json(responseData(200,{result}))
         }catch(e){
-            res.json(responseData(500,{msg: e.sqlMessage}))
+            // console.log(String(e))
+            res.status(500).send(String(e));
+            // res.json(responseData(500,{msg: String(e)}))
         }
     }
     remove = async (req,res)=>{

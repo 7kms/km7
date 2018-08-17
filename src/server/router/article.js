@@ -10,6 +10,7 @@ router.get('/:id', controller.detail)
 
 
 router.use(Permission.needLogin)
+router.get('/bg/:id', controller.bgdetail)
 router.post('/', controller.insert)
 router.put('/:id', controller.update)
 router.delete('/:id', controller.remove)

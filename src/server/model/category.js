@@ -34,7 +34,8 @@ const Category = DAO.sequelize.define('category',{
     },
     key: {
         type: Sequelize.STRING, 
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 })
 Category.sync()

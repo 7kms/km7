@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Aside from '~components/aside'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
+import {slogan} from '~data'
 
 import styles from '~less/app.less'
 let cx = classNames.bind(styles)
@@ -12,7 +13,8 @@ let cx = classNames.bind(styles)
 export default class App extends Component{
     static propTypes = {
         route: PropTypes.object.isRequired,
-        match: PropTypes.object.isRequired
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired
     }
    
     // static loadInitialData = (store)=>{
@@ -20,10 +22,11 @@ export default class App extends Component{
     // }
    
     render(){
+        const {location} = this.props;
         return (
             <Fragment>
                <Header/>
-                <div className={cx('wrap')}>
+                <div className={cx('wrap',{home: !(/article|about/.test(location.pathname))})}>
                     <section className={cx('main')}>
                         {renderRoutes(this.props.route.routes)}
                     </section>
@@ -44,7 +47,7 @@ class Header extends PureComponent{
                 <h2 className={cx('bar','flex-between')}>
                     <a className="flex-start" href="/">
                         <i className={cx('icon','km')}/>
-                        <span className={cx('slogan')}>畅谈7km, 忆二塘重交</span>
+                        <span className={cx('slogan')}>{slogan}</span>
                     </a>
                     <Link to='/about' className={cx('about')}>关于</Link>
                 </h2>

@@ -66,6 +66,7 @@ export default class Article extends Component{
         }
         return (
             <PageHead header={this.generateHeaderByArticle(article)}>
+                <header className={cx('header')}><h1>{article.title}</h1></header>
                 <div className={cx('wrap')}>
                     <Fragment>
                         <div className={cx('flex-center','tag-list')}>
@@ -74,7 +75,7 @@ export default class Article extends Component{
                         </div>
                         <div className={cx('flex-between','info')}>
                             <div className={cx('flex-center')}><i className={cx('icon','icon-time')}></i><span className={cx('time')}>{dateFormat(article.updatedAt,'yyyy/MM/dd HH:mm')}</span></div>                
-                            <div className={cx('flex-center')}><i className={cx('icon','icon-view')}></i><span className={cx('view')}>10</span></div>
+                            <div className={cx('flex-center')}><i className={cx('icon','icon-view')}></i><span className={cx('view')}>{article.view}</span></div>
                         </div>
                     </Fragment>
                     <Markdown source={article.content} className={cx('content')}/>

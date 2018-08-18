@@ -28,6 +28,7 @@ import Category from './category'
     ALTER TABLE `articles` MODIFY COLUMN `keywords` VARCHAR(255)  NOT NULL;
     ALTER TABLE `articles` ADD COLUMN `description` VARCHAR(255) NOT NULL AFTER `keywords`;
 
+    ALTER TABLE `articles` ADD COLUMN `view` INT NOT NULL DEFAULT 0 AFTER  `tags`;
  * 
  * 
  */
@@ -71,6 +72,11 @@ const Article = DAO.sequelize.define('article',{
     tags: {
         type: Sequelize.STRING, 
         allowNull: false
+    },
+    view:{
+        type: Sequelize.INTEGER, 
+        allowNull: false,
+        defaultValue: 0
     }
 });
 Article.sync();

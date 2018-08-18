@@ -7,7 +7,9 @@ class Aside extends PureComponent{
 
 
     render(){
-        return (<section className={cx('aside')}>panel</section>)
+        return (<section className={cx('aside')}>
+            <div style={{position:'fixed'}}>panel</div>
+        </section>)
     }
 }
 

@@ -27,7 +27,7 @@ class Item extends PureComponent{
                 <div className={cx('desc')}>{info.description}</div>
                 <div className={cx('flex-between','info','gray','small')}>
                     <div className={cx('flex-center')}><i className={cx('icon','icon-time')}></i><span className={cx('time')}>{dateFormat(info.updatedAt,'yyyy/MM/dd HH:mm')}</span></div>                
-                    <div className={cx('flex-center')}><i className={cx('icon','icon-view')}></i><span className={cx('view')}>10</span></div>
+                    <div className={cx('flex-center')}><i className={cx('icon','icon-view')}></i><span className={cx('view')}>{info.view}</span></div>
                 </div>
             </div>
             {/* <div className={cx('right')}></div> */}

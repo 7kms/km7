@@ -27,7 +27,7 @@ class Article {
                     return;
                 }
             }
-            let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tags,a.createdAt,a.updatedAt,c.name category, c.id categoryId 
+            let list = await DAO.execute(`SELECT a.id,a.title,a.keywords,a.description,a.tags,a.view,a.createdAt,a.updatedAt,c.name category, c.id categoryId 
                                         from articles a JOIN categories c on a.categoryId = c.id where c.key = '${category}' limit ${page*size}, ${size}`)
             for(let item of list){
                 item.tags = await this.transfromTagByStr(item.tags);
@@ -52,6 +52,7 @@ class Article {
         article.category = await categoryModel.findOne({where:{id: article.categoryId}})
         article.tags = await this.transfromTagByStr(article.tags);
         res.send(responseData(200,{article}))
+        DAO.execute(`UPDATE articles SET view=view+1 where id=${id}`)
     }
     bgdetail = async (req,res)=>{
         let {id} = req.params;

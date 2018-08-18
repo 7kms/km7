@@ -1,4 +1,4 @@
-
+export const slogan = '7哥(7km), 前端填坑记'
 export const getPageMeta = (title='')=>{
     const obj = {
         title: `${title} -- km7 突破web前端开发`,

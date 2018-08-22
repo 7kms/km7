@@ -19,8 +19,8 @@ const postcssLoaderRule = {
       plugins: () => [
         require('autoprefixer')({
           browsers: [
-            '>10%',
-            'last 99 versions',
+            '>2%',
+            'last 2 versions',
             'Firefox ESR',
             'not ie < 9', // React doesn't support IE8 anyway
           ]

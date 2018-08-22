@@ -32,9 +32,7 @@ export default class App extends Component{
                     </section>
                     <Aside/>
                 </div>
-                <footer className={cx('footer')}>
-                    @sd
-                </footer>
+                { /about/.test(location.pathname) ? <footer className={cx('footer')}>&copy;2018 · 7km · 渝ICP备15003350号-1</footer> : null}
             </Fragment>
         )
     }
